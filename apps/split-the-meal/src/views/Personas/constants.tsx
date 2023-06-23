@@ -1,0 +1,1 @@
+export const PERSONAS_NICKNAME_MAX_LIMIT = 30;
