@@ -1,33 +1,23 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
-import { COOLORS } from "../../utils/coolors";
 import { PersonasList } from "./PersonasList";
 import { PersonasInput } from "./PersonasInput";
 import { Button } from "../../atoms/Button";
 import { Persona } from "../../models/Personas";
 import { uuid } from "../../utils/uuid";
+import { useAppDispatch, useAppState } from "../../contexts/appContext";
+import { PhaseBackground } from "../../atoms/PhaseBackground";
 
-const PersonasBackground = styled.div`
-  width: 600px;
-  border-radius: 8px;
-  border: 2px solid ${COOLORS.tertiary};
-  color: ${COOLORS.fifth};
-  padding: 24px;
-  align-self: stretch;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  row-gap: 16px;
-`;
-
-const PersonasFooter = styled.div`
+const PersonaRegistrationFooter = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
-export const Personas = () => {
-  const [personas, setPersonas] = useState<Array<Persona>>([]);
+export const PersonaRegistration = () => {
+  const state = useAppState();
+  const dispatch = useAppDispatch();
+  const [personas, setPersonas] = useState<Array<Persona>>(state.personas);
 
   function remove(id: string) {
     setPersonas((prev) => prev.filter((persona) => persona.id !== id));
@@ -52,16 +42,27 @@ export const Personas = () => {
     return isError;
   }
 
+  function proceed() {
+    dispatch({
+      type: "REGISTER_PERSONAS",
+      payload: personas,
+    });
+  }
+
   return (
-    <PersonasBackground>
-      <h1>Personas</h1>
+    <PhaseBackground>
+      <h1>Persona registration</h1>
       <PersonasInput add={add} />
       <PersonasList personas={personas} remove={remove} />
-      <PersonasFooter>
-        <Button type="button" disabled={personas.length < 1}>
+      <PersonaRegistrationFooter>
+        <Button
+          type="button"
+          disabled={personas.length < 1}
+          onClick={() => proceed()}
+        >
           Proceed &gt;&gt;
         </Button>
-      </PersonasFooter>
-    </PersonasBackground>
+      </PersonaRegistrationFooter>
+    </PhaseBackground>
   );
 };

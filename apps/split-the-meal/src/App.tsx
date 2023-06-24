@@ -1,6 +1,6 @@
 import { COOLORS } from "./utils/coolors";
-import { Personas } from "./views/Personas";
 import styled from "@emotion/styled";
+import { Views } from "./views/Views";
 
 const Background = styled.div`
   height: 100vh;
@@ -15,7 +15,7 @@ const Background = styled.div`
 function App() {
   return (
     <Background>
-      <Personas />
+      <Views />
     </Background>
   );
 }
