@@ -7,6 +7,7 @@ import {
 import { AppState } from "../reducers/app.state";
 import { appReducer } from "../reducers/app.reducer";
 import { AppActions } from "../reducers/app.actions";
+import { DEFAULT_APP_STATE } from "../reducers/app.default";
 
 const AppStateContext = createContext<AppState | null>(null);
 
@@ -15,18 +16,7 @@ const AppDispatchContext = createContext<React.Dispatch<AppActions> | null>(
 );
 
 export const AppProvider = (props: PropsWithChildren) => {
-  const [state, dispatch] = useReducer(appReducer, {
-    phase: "PERSONA_REGISTRATION",
-    personas: [],
-    meals: [],
-    funds: {
-      vat: false,
-      service: false,
-      delivery: 0,
-      tips: 0,
-    },
-    shares: [],
-  });
+  const [state, dispatch] = useReducer(appReducer, DEFAULT_APP_STATE);
 
   return (
     <AppStateContext.Provider value={state}>

@@ -18,6 +18,18 @@ export const appReducer = (state: AppState, actions: AppActions): AppState => {
         phase: "MEAL_PREPARATION",
       };
     }
+    case "MEALS_ARE_READY": {
+      const mealsLookup = createLookupByKey(actions.payload, "id");
+      const updateShares: AppState["shares"] = state.shares.filter((share) =>
+        mealsLookup.has(share.mealId)
+      );
+      return {
+        ...state,
+        meals: actions.payload,
+        shares: updateShares,
+        phase: "PERSONA_REGISTRATION",
+      };
+    }
     default:
       return state;
   }

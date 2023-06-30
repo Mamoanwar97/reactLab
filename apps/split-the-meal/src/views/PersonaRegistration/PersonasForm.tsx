@@ -3,6 +3,13 @@ import { COOLORS } from "../../utils/coolors";
 import styled from "@emotion/styled";
 import { PERSONAS_NICKNAME_MAX_LIMIT } from "./constants";
 import { Button } from "../../atoms/Button";
+import { Persona } from "../../models/Personas";
+
+const NAME_INPUT = "name";
+
+type PersonaFormSchema = {
+  [NAME_INPUT]: string;
+};
 
 const InputWrapper = styled.div`
   display: flex;
@@ -12,26 +19,34 @@ const InputWrapper = styled.div`
   column-gap: 8px;
 `;
 
-type PersonasInputProps = {
-  add: (name: string) => boolean;
+type PersonasFormProps = {
+  add: (name: Omit<Persona, "id">) => boolean;
 };
 
-export const PersonasInput = ({ add }: PersonasInputProps) => {
-  const [personaName, setPersonaName] = useState("");
+export const PersonasForm = ({ add }: PersonasFormProps) => {
   const [duplicateNameError, setDuplicateNameError] = useState<string>();
 
-  function reset() {
-    setPersonaName("");
-    setDuplicateNameError(undefined);
-  }
-
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    // Prevent the browser from reloading the page
     e.preventDefault();
-    const isError = add(personaName);
+
+    // Read the form data
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+
+    const result = Object.fromEntries(formData.entries());
+
+    const personaFormSchema = validatePersonaFormSchema(result);
+
+    const isError = add({
+      name: personaFormSchema[NAME_INPUT],
+    });
+
     if (isError) {
-      setDuplicateNameError(personaName);
+      setDuplicateNameError(personaFormSchema[NAME_INPUT]);
     } else {
-      reset();
+      form.reset();
+      setDuplicateNameError(undefined);
     }
   }
 
@@ -50,12 +65,12 @@ export const PersonasInput = ({ add }: PersonasInputProps) => {
       </p>
       <InputWrapper>
         <input
+          name={NAME_INPUT}
           type="text"
           placeholder="Please enter a nickname"
           maxLength={PERSONAS_NICKNAME_MAX_LIMIT}
-          value={personaName}
-          onChange={(e) => setPersonaName(e.target.value)}
           style={{ flex: "1 0 auto", padding: "0 16px" }}
+          required
         />
         <Button>register</Button>
       </InputWrapper>
@@ -71,3 +86,21 @@ export const PersonasInput = ({ add }: PersonasInputProps) => {
     </form>
   );
 };
+
+function validatePersonaFormSchema(
+  form: Record<string, unknown>
+): PersonaFormSchema {
+  const hasNameInput = NAME_INPUT in form;
+
+  if (!hasNameInput) {
+    throw new Error("Form schema is inCorrect");
+  }
+
+  const passedForm = form as Record<keyof PersonaFormSchema, string>;
+
+  const resultForm: PersonaFormSchema = {
+    [NAME_INPUT]: passedForm[NAME_INPUT].trim(),
+  };
+
+  return resultForm;
+}

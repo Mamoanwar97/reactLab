@@ -1,45 +1,37 @@
-import styled from "@emotion/styled";
 import { useState } from "react";
 import { PersonasList } from "./PersonasList";
-import { PersonasInput } from "./PersonasInput";
+import { PersonasForm } from "./PersonasForm";
 import { Button } from "../../atoms/Button";
 import { Persona } from "../../models/Personas";
 import { uuid } from "../../utils/uuid";
 import { useAppDispatch, useAppState } from "../../contexts/appContext";
 import { PhaseBackground } from "../../atoms/PhaseBackground";
-
-const PersonaRegistrationFooter = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+import { PhaseFooter } from "../../atoms/PhaseFooter";
 
 export const PersonaRegistration = () => {
   const state = useAppState();
   const dispatch = useAppDispatch();
   const [personas, setPersonas] = useState<Array<Persona>>(state.personas);
 
-  function remove(id: string) {
-    setPersonas((prev) => prev.filter((persona) => persona.id !== id));
-  }
-
-  function add(name: string) {
-    const personaValue = name.trim();
-
+  function add(params: Omit<Persona, "id">) {
     let isError: boolean = false;
 
-    if (personaValue !== "") {
+    if (params.name !== "") {
       setPersonas((prev) => {
-        if (prev.some((persona) => persona.name === personaValue)) {
+        if (prev.some((persona) => persona.name === params.name)) {
           isError = true;
           return prev;
         }
         const id = uuid();
-        return prev.concat({ id, name: personaValue });
+        return prev.concat({ id, ...params });
       });
     }
 
     return isError;
+  }
+
+  function remove(id: string) {
+    setPersonas((prev) => prev.filter((persona) => persona.id !== id));
   }
 
   function proceed() {
@@ -52,9 +44,9 @@ export const PersonaRegistration = () => {
   return (
     <PhaseBackground>
       <h1>Persona registration</h1>
-      <PersonasInput add={add} />
+      <PersonasForm add={add} />
       <PersonasList personas={personas} remove={remove} />
-      <PersonaRegistrationFooter>
+      <PhaseFooter>
         <Button
           type="button"
           disabled={personas.length < 1}
@@ -62,7 +54,7 @@ export const PersonaRegistration = () => {
         >
           Proceed &gt;&gt;
         </Button>
-      </PersonaRegistrationFooter>
+      </PhaseFooter>
     </PhaseBackground>
   );
 };
