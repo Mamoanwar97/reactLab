@@ -1,19 +1,20 @@
 import { useAppState } from "../contexts/appContext";
-import { CalculatingFunds } from "./CalculatingFunds";
+import { CalculatingFees } from "./CalculatingFees";
 import { MealPreparation } from "./MealPreparation";
 import { PersonaRegistration } from "./PersonaRegistration";
 import { SummaryTime } from "./SummaryTime";
 
 export const Views = () => {
   const state = useAppState();
+  // return <CalculatingFees />;
 
   switch (state.phase) {
-    case "PERSONA_REGISTRATION":
-      return <PersonaRegistration />;
-    case "CALCULATING_FUNDS":
-      return <CalculatingFunds />;
     case "MEAL_PREPARATION":
       return <MealPreparation />;
+    case "PERSONA_REGISTRATION":
+      return <PersonaRegistration />;
+    case "FEES_CALCULATIONS":
+      return <CalculatingFees />;
     case "SUMMARY_TIME":
       return <SummaryTime />;
     default:

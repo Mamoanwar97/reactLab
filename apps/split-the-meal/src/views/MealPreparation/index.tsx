@@ -24,7 +24,7 @@ export const MealPreparation = () => {
 
   function proceed() {
     dispatch({
-      type: "MEALS_ARE_READY",
+      type: "MEAL_COOKED",
       payload: meals,
     });
   }

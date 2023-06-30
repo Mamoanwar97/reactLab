@@ -4,6 +4,25 @@ import { AppState } from "./app.state";
 
 export const appReducer = (state: AppState, actions: AppActions): AppState => {
   switch (actions.type) {
+    case "MEAL_COOKED": {
+      const mealsLookup = createLookupByKey(actions.payload, "id");
+      const updateShares: AppState["shares"] = state.shares.filter((share) =>
+        mealsLookup.has(share.mealId)
+      );
+      return {
+        ...state,
+        meals: actions.payload,
+        shares: updateShares,
+        phase: "FEES_CALCULATIONS",
+      };
+    }
+    case "ADD_FEES": {
+      return {
+        ...state,
+        fees: actions.payload,
+        phase: "PERSONA_REGISTRATION",
+      };
+    }
     case "REGISTER_PERSONAS": {
       const personasLookup = createLookupByKey(actions.payload, "id");
       const updateShares: AppState["shares"] = state.shares.map((share) => ({
@@ -15,25 +34,6 @@ export const appReducer = (state: AppState, actions: AppActions): AppState => {
         ...state,
         personas: actions.payload,
         shares: updateShares,
-        phase: "CALCULATING_FUNDS",
-      };
-    }
-    case "MEALS_ARE_READY": {
-      const mealsLookup = createLookupByKey(actions.payload, "id");
-      const updateShares: AppState["shares"] = state.shares.filter((share) =>
-        mealsLookup.has(share.mealId)
-      );
-      return {
-        ...state,
-        meals: actions.payload,
-        shares: updateShares,
-        phase: "PERSONA_REGISTRATION",
-      };
-    }
-    case "ADD_FUNDS": {
-      return {
-        ...state,
-        funds: actions.payload,
         phase: "MEAL_PREPARATION",
       };
     }

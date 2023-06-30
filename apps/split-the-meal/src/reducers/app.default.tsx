@@ -4,11 +4,12 @@ export const DEFAULT_APP_STATE: AppState = {
   phase: "MEAL_PREPARATION",
   personas: [],
   meals: [],
-  funds: {
+  fees: {
     vat: false,
     service: false,
     delivery: 0,
     tips: 0,
+    discount: 0,
   },
   shares: [],
 };
