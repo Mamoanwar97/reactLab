@@ -1,3 +1,4 @@
+import { Funds } from "../models/Funds";
 import { Meal } from "../models/Meal";
 import { Persona } from "../models/Personas";
 
@@ -15,5 +16,6 @@ type BaseAction<TAction extends ActionTypes, TPayload extends any> = {
 
 export type DoneWithPersonas = BaseAction<"REGISTER_PERSONAS", Array<Persona>>;
 export type DoneWithMeals = BaseAction<"MEALS_ARE_READY", Array<Meal>>;
+export type SetFunds = BaseAction<"ADD_FUNDS", Funds>;
 
-export type AppActions = DoneWithMeals | DoneWithPersonas;
+export type AppActions = DoneWithMeals | DoneWithPersonas | SetFunds;

@@ -1,23 +1,15 @@
 import { useState } from "react";
 import { COOLORS } from "../../utils/coolors";
-import styled from "@emotion/styled";
-import { PERSONAS_NICKNAME_MAX_LIMIT } from "./constants";
-import { Button } from "../../atoms/Button";
+import { FormButton } from "../../atoms/FormButton";
 import { Persona } from "../../models/Personas";
+import { InputWrapper } from "./PersonasForm.styles";
 
+const PERSONAS_NICKNAME_MAX_LIMIT = 30;
 const NAME_INPUT = "name";
 
 type PersonaFormSchema = {
   [NAME_INPUT]: string;
 };
-
-const InputWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-  height: 30px;
-  column-gap: 8px;
-`;
 
 type PersonasFormProps = {
   add: (name: Omit<Persona, "id">) => boolean;
@@ -72,7 +64,7 @@ export const PersonasForm = ({ add }: PersonasFormProps) => {
           style={{ flex: "1 0 auto", padding: "0 16px" }}
           required
         />
-        <Button>register</Button>
+        <FormButton>register</FormButton>
       </InputWrapper>
       <p
         style={{

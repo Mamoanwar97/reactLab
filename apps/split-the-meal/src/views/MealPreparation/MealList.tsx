@@ -1,5 +1,5 @@
-import { ListWrapper } from "../../atoms/ListWrapper";
-import { ListItem } from "../../atoms/ListItem";
+import { ListRemoveButton, ListWrapper } from "../../atoms/List.styles";
+import { ListItem } from "../../atoms/List.styles";
 import { Meal } from "../../models/Meal";
 
 type MealListProps = {
@@ -15,13 +15,9 @@ export const MealList = (props: MealListProps) => {
           <p>name: {meal.name}</p>
           <p>price per item: {meal.pricePerItem}</p>
           <p>quantity: {meal.quantity}</p>
-          <button
-            type="button"
-            style={{ all: "unset", cursor: "pointer", wordBreak: "keep-all" }}
-            onClick={() => props.removeMeal(meal.id)}
-          >
+          <ListRemoveButton onClick={() => props.removeMeal(meal.id)}>
             remove
-          </button>
+          </ListRemoveButton>
         </ListItem>
       ))}
     </ListWrapper>

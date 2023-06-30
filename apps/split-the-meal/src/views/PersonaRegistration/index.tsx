@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { PersonasList } from "./PersonasList";
 import { PersonasForm } from "./PersonasForm";
-import { Button } from "../../atoms/Button";
+import { FormButton } from "../../atoms/FormButton";
 import { Persona } from "../../models/Personas";
 import { uuid } from "../../utils/uuid";
 import { useAppDispatch, useAppState } from "../../contexts/appContext";
-import { PhaseBackground } from "../../atoms/PhaseBackground";
-import { PhaseFooter } from "../../atoms/PhaseFooter";
+import { PhaseBackground, PhaseTitle } from "../../atoms/Phase.styles";
+import { PhaseFooter } from "../../atoms/Phase.styles";
 
 export const PersonaRegistration = () => {
   const state = useAppState();
@@ -43,17 +43,17 @@ export const PersonaRegistration = () => {
 
   return (
     <PhaseBackground>
-      <h1>Persona registration</h1>
+      <PhaseTitle>Persona registration</PhaseTitle>
       <PersonasForm add={add} />
       <PersonasList personas={personas} remove={remove} />
       <PhaseFooter>
-        <Button
+        <FormButton
           type="button"
           disabled={personas.length < 1}
           onClick={() => proceed()}
         >
           Proceed &gt;&gt;
-        </Button>
+        </FormButton>
       </PhaseFooter>
     </PhaseBackground>
   );

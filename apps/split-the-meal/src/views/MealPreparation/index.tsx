@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { PhaseBackground } from "../../atoms/PhaseBackground";
+import { PhaseBackground, PhaseTitle } from "../../atoms/Phase.styles";
 import { MealForm } from "./MealForm";
 import { MealList } from "./MealList";
 import { Meal } from "../../models/Meal";
-import { PhaseFooter } from "../../atoms/PhaseFooter";
+import { PhaseFooter } from "../../atoms/Phase.styles";
 import { useAppDispatch, useAppState } from "../../contexts/appContext";
-import { Button } from "../../atoms/Button";
+import { FormButton } from "../../atoms/FormButton";
 import { uuid } from "../../utils/uuid";
 
 export const MealPreparation = () => {
@@ -31,17 +31,17 @@ export const MealPreparation = () => {
 
   return (
     <PhaseBackground>
-      <h1>Meal preparation</h1>
+      <PhaseTitle>Meal preparation</PhaseTitle>
       <MealForm addMeal={addMeal} />
       <MealList meals={meals} removeMeal={removeMeal} />
       <PhaseFooter>
-        <Button
+        <FormButton
           type="button"
           disabled={meals.length < 1}
           onClick={() => proceed()}
         >
           Proceed &gt;&gt;
-        </Button>
+        </FormButton>
       </PhaseFooter>
     </PhaseBackground>
   );

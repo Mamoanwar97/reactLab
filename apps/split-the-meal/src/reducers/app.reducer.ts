@@ -15,7 +15,7 @@ export const appReducer = (state: AppState, actions: AppActions): AppState => {
         ...state,
         personas: actions.payload,
         shares: updateShares,
-        phase: "MEAL_PREPARATION",
+        phase: "CALCULATING_FUNDS",
       };
     }
     case "MEALS_ARE_READY": {
@@ -28,6 +28,13 @@ export const appReducer = (state: AppState, actions: AppActions): AppState => {
         meals: actions.payload,
         shares: updateShares,
         phase: "PERSONA_REGISTRATION",
+      };
+    }
+    case "ADD_FUNDS": {
+      return {
+        ...state,
+        funds: actions.payload,
+        phase: "MEAL_PREPARATION",
       };
     }
     default:

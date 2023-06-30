@@ -1,10 +1,10 @@
 import { Persona } from "../../models/Personas";
-import { ListWrapper } from "../../atoms/ListWrapper";
-import { ListItem } from "../../atoms/ListItem";
+import { ListRemoveButton, ListWrapper } from "../../atoms/List.styles";
+import { ListItem } from "../../atoms/List.styles";
 
 type PersonasListProps = {
   personas: Array<Persona>;
-  remove: (id: string) => void;
+  remove: (id: Persona["id"]) => void;
 };
 
 export const PersonasList = (props: PersonasListProps) => {
@@ -14,13 +14,9 @@ export const PersonasList = (props: PersonasListProps) => {
       {personasList.map((persona) => (
         <ListItem key={persona.id}>
           {persona.name}
-          <button
-            type="button"
-            style={{ all: "unset", cursor: "pointer", wordBreak: "keep-all" }}
-            onClick={() => props.remove(persona.id)}
-          >
+          <ListRemoveButton onClick={() => props.remove(persona.id)}>
             remove
-          </button>
+          </ListRemoveButton>
         </ListItem>
       ))}
     </ListWrapper>
