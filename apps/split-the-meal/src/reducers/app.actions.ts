@@ -3,11 +3,10 @@ import { Meal } from "../models/Meal";
 import { Persona } from "../models/Personas";
 
 type ActionTypes =
+  | "REGISTER_PERSONAS"
   | "MEAL_COOKED"
   | "ADD_FEES"
-  | "REGISTER_PERSONAS"
-  | "READY_TO_SERVE"
-  | "SPLIT_THE_MEAL";
+  | "SHARE_THE_MEAL";
 
 type BaseAction<TAction extends ActionTypes, TPayload extends any> = {
   type: TAction;

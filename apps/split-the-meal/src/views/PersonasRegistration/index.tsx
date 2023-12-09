@@ -3,17 +3,17 @@ import { PersonasList } from "./PersonasList";
 import { PersonasForm } from "./PersonasForm";
 import { FormButton } from "../../atoms/FormButton";
 import { Persona } from "../../models/Personas";
-import { uuid } from "../../utils/uuid";
 import { useAppDispatch, useAppState } from "../../contexts/appContext";
 import { PhaseBackground, PhaseTitle } from "../../atoms/Phase.styles";
 import { PhaseFooter } from "../../atoms/Phase.styles";
 
-export const PersonaRegistration = () => {
+//TODO: Generate random names
+export const PersonasRegistration = () => {
   const state = useAppState();
   const dispatch = useAppDispatch();
   const [personas, setPersonas] = useState<Array<Persona>>(state.personas);
 
-  function add(params: Omit<Persona, "id">) {
+  function add(params: Persona) {
     let isError: boolean = false;
 
     if (params.name !== "") {
@@ -22,16 +22,15 @@ export const PersonaRegistration = () => {
           isError = true;
           return prev;
         }
-        const id = uuid();
-        return prev.concat({ id, ...params });
+        return prev.concat(params);
       });
     }
 
     return isError;
   }
 
-  function remove(id: string) {
-    setPersonas((prev) => prev.filter((persona) => persona.id !== id));
+  function remove(name: string) {
+    setPersonas((prev) => prev.filter((persona) => persona.name !== name));
   }
 
   function proceed() {
@@ -43,7 +42,7 @@ export const PersonaRegistration = () => {
 
   return (
     <PhaseBackground>
-      <PhaseTitle>Persona registration</PhaseTitle>
+      <PhaseTitle>Personas registration</PhaseTitle>
       <PersonasForm add={add} />
       <PersonasList personas={personas} remove={remove} />
       <PhaseFooter>

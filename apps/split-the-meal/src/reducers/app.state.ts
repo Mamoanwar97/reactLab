@@ -4,10 +4,11 @@ import { Persona } from "../models/Personas";
 import { Share } from "../models/Share";
 
 export type AppPhase =
-  | "MEAL_PREPARATION"
+  | "MEALS_PREPARATION"
   | "FEES_CALCULATIONS"
-  | "PERSONA_REGISTRATION"
-  | "SUMMARY_TIME";
+  | "PERSONAS_REGISTRATION"
+  | "SHARING_TIME"
+  | "FINAL_SUMMARY";
 
 export type AppState = {
   phase: AppPhase;

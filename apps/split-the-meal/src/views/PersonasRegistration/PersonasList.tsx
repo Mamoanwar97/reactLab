@@ -4,7 +4,7 @@ import { ListItem } from "../../atoms/List.styles";
 
 type PersonasListProps = {
   personas: Array<Persona>;
-  remove: (id: Persona["id"]) => void;
+  remove: (id: Persona["name"]) => void;
 };
 
 export const PersonasList = (props: PersonasListProps) => {
@@ -12,9 +12,9 @@ export const PersonasList = (props: PersonasListProps) => {
   return (
     <ListWrapper>
       {personasList.map((persona) => (
-        <ListItem key={persona.id}>
+        <ListItem key={persona.name}>
           {persona.name}
-          <ListRemoveButton onClick={() => props.remove(persona.id)}>
+          <ListRemoveButton onClick={() => props.remove(persona.name)}>
             remove
           </ListRemoveButton>
         </ListItem>

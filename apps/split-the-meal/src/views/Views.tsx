@@ -1,22 +1,24 @@
 import { useAppState } from "../contexts/appContext";
 import { CalculatingFees } from "./CalculatingFees";
-import { MealPreparation } from "./MealPreparation";
-import { PersonaRegistration } from "./PersonaRegistration";
-import { SummaryTime } from "./SummaryTime";
+import { MealsPreparation } from "./MealsPreparation";
+import { MealSharing } from "./MealSharing";
+import { PersonasRegistration } from "./PersonasRegistration";
+import { Summary } from "./Summary";
 
 export const Views = () => {
   const state = useAppState();
-  // return <CalculatingFees />;
 
   switch (state.phase) {
-    case "MEAL_PREPARATION":
-      return <MealPreparation />;
-    case "PERSONA_REGISTRATION":
-      return <PersonaRegistration />;
+    case "PERSONAS_REGISTRATION":
+      return <PersonasRegistration />;
+    case "MEALS_PREPARATION":
+      return <MealsPreparation />;
     case "FEES_CALCULATIONS":
       return <CalculatingFees />;
-    case "SUMMARY_TIME":
-      return <SummaryTime />;
+    case "SHARING_TIME":
+      return <MealSharing />;
+    case "FINAL_SUMMARY":
+      return <Summary />;
     default:
       throw new Error("Phase isn't implemented yet");
   }

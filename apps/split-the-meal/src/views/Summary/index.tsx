@@ -1,9 +1,9 @@
 import { PhaseBackground, PhaseTitle } from "../../atoms/Phase.styles";
 
-export const SummaryTime = () => {
+export const Summary = () => {
   return (
     <PhaseBackground>
-      <PhaseTitle>Summary time</PhaseTitle>
+      <PhaseTitle>Summary</PhaseTitle>
     </PhaseBackground>
   );
 };

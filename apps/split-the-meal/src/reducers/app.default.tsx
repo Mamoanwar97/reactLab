@@ -1,9 +1,10 @@
 import { AppState } from "./app.state";
 
 export const DEFAULT_APP_STATE: AppState = {
-  phase: "MEAL_PREPARATION",
+  phase: "PERSONAS_REGISTRATION",
   personas: [],
   meals: [],
+  shares: [],
   fees: {
     vat: false,
     service: false,
@@ -11,5 +12,4 @@ export const DEFAULT_APP_STATE: AppState = {
     tips: 0,
     discount: 0,
   },
-  shares: [],
 };

@@ -1,25 +1,40 @@
 import { useState } from "react";
 import { PhaseBackground, PhaseTitle } from "../../atoms/Phase.styles";
 import { MealForm } from "./MealForm";
-import { MealList } from "./MealList";
+import { MealsList } from "./MealsList";
 import { Meal } from "../../models/Meal";
 import { PhaseFooter } from "../../atoms/Phase.styles";
 import { useAppDispatch, useAppState } from "../../contexts/appContext";
 import { FormButton } from "../../atoms/FormButton";
-import { uuid } from "../../utils/uuid";
+import { createLookupByKey } from "../../utils/createLookupByKey";
 
-export const MealPreparation = () => {
+export const MealsPreparation = () => {
   const state = useAppState();
   const dispatch = useAppDispatch();
   const [meals, setMeals] = useState<Array<Meal>>(state.meals);
 
-  const addMeal = (params: Omit<Meal, "id">) => {
-    const id = uuid();
-    setMeals((prev) => prev.concat({ ...params, id }));
+  const addMeal = (params: Meal) => {
+    setMeals((prev) => {
+      const mealsLookup = createLookupByKey(prev, "name");
+
+      const mealExist = mealsLookup.get(params.name);
+
+      if (mealExist === undefined) {
+        mealsLookup.set(params.name, params);
+      } else {
+        //TODO: Handle if they have the same name but different prices per item
+        mealsLookup.set(params.name, {
+          ...mealExist,
+          quantity: mealExist.quantity + params.quantity,
+        });
+      }
+
+      return Array.from(mealsLookup.values());
+    });
   };
 
-  const removeMeal = (mealId: Meal["id"]) => {
-    setMeals((prev) => prev.filter((meal) => meal.id !== mealId));
+  const removeMeal = (mealName: Meal["name"]) => {
+    setMeals((prev) => prev.filter((meal) => meal.name !== mealName));
   };
 
   function proceed() {
@@ -31,9 +46,9 @@ export const MealPreparation = () => {
 
   return (
     <PhaseBackground>
-      <PhaseTitle>Meal preparation</PhaseTitle>
+      <PhaseTitle>Meals preparation</PhaseTitle>
       <MealForm addMeal={addMeal} />
-      <MealList meals={meals} removeMeal={removeMeal} />
+      <MealsList meals={meals} removeMeal={removeMeal} />
       <PhaseFooter>
         <FormButton
           type="button"

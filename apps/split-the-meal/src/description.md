@@ -1,6 +1,6 @@
 # Todo list
 
-## SPLIT TIME
+## Split time
 
 - split meals over personas
 

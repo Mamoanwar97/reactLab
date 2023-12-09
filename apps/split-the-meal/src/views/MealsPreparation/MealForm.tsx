@@ -92,7 +92,7 @@ export const MealForm = (props: MealFormProps) => {
             checked={isForQuantity === "SINGLE"}
             type="radio"
             name={IS_TOTAL_INPUT}
-            onChange={(e) => setIsForQuantity("SINGLE")}
+            onChange={() => setIsForQuantity("SINGLE")}
           />
           price for single item
         </label>
@@ -101,7 +101,7 @@ export const MealForm = (props: MealFormProps) => {
             checked={isForQuantity === "QUANTITY"}
             type="radio"
             name={IS_TOTAL_INPUT}
-            onChange={(e) => setIsForQuantity("QUANTITY")}
+            onChange={() => setIsForQuantity("QUANTITY")}
           />
           price for whole quantity
         </label>
